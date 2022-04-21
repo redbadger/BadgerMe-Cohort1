@@ -26,14 +26,15 @@ fun SplashScreenAnimate(navController: NavController) {
         }
     }
 
-    BoxWithConstraints(
-        contentAlignment = Alignment.Center,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
             painter = painterResource(R.drawable.rb_title),
             contentDescription = "rb title",
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier.padding(Dp(50.0F))
         )
         Image(
             painter = painterResource(R.drawable.rb_logo),
