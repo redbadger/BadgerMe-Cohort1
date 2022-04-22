@@ -1,0 +1,17 @@
+/shelf/
+/workspace.xml
+# taken from https://rider-support.jetbrains.com/hc/en-us/articles/207097529-What-is-the-idea-folder-
+# and https://betterprogramming.pub/exploring-the-idea-folder-790931c19191
+*
+!.gitignore
+!codestyles/
+!dictionaries/
+!fileTemplates/
+!inspectionProfiles/
+!runConfigurations/
+!runConfigurations.xml
+!compiler.xml
+!gradle.xml
+!indexLayout.xml
+!vcs.xml
+!runConfigurations/
