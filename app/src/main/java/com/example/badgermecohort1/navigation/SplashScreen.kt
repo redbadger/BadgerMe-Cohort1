@@ -40,7 +40,7 @@ fun SplashScreenAnimate(navController: NavController) {
         LaunchedEffect(key1 = true){
         //TODO: Need to change this so splash screen only lasts as long as it takes to load main screen
         delay(1000)
-        navController.navigate("main_screen"){
+        navController.navigate("login_screen"){
             popUpTo("splash_screen"){
                 inclusive=true
             }
