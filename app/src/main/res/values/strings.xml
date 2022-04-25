@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BadgerMeCohort1</string>
+    <string name="login_description">BadgerMe let\'s you create and join events with other Badgers.</string>
 </resources>
