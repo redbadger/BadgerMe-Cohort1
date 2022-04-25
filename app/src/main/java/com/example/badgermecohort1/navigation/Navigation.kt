@@ -18,7 +18,7 @@ fun navigation() {
         composable("splash_screen") {
             SplashScreenAnimate(navController)
         }
-        composable("main_screen") {
+        composable("login_screen") {
             login()
             }
         }

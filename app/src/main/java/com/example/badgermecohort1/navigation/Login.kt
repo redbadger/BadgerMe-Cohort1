@@ -47,7 +47,7 @@ fun login() {
         ) {
             Row() {
                 Image(painter = painterResource(R.drawable.square),
-                    contentDescription = "square1",
+                    contentDescription = "square1", //TODO: Rename images based on category & create repeated image component
                     modifier = Modifier
                         .padding(5.dp)
                         .size(96.dp)
@@ -109,7 +109,7 @@ fun login() {
                     .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
                     .fillMaxWidth()
             ){
-                Text("Sign in with Google")
+                Text(stringResource(R.string.login_sign_in_with_google))
             }
         }
 
