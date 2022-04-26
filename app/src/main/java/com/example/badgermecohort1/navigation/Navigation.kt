@@ -16,5 +16,8 @@ fun navigation(googleClient: GoogleSignInClient?) {
         composable("login_screen") {
             login(navController, googleClient)
             }
+        composable("main_screen"){
+            MainScreen(navController)
+        }
         }
     }

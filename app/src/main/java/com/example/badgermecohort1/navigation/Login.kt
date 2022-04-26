@@ -36,16 +36,16 @@ import com.google.android.gms.tasks.Task
 fun login(navController: NavHostController, googleClient: GoogleSignInClient?) {
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            Log.d("LogInPage", result.resultCode.toString())
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
+                Log.d("LogInPage", "Result.data")
 
-                if (intent != null) {
+                if (result.data != null) {
                     val task: Task<GoogleSignInAccount> =
                         GoogleSignIn.getSignedInAccountFromIntent(intent)
-
-                    val bundle = Bundle()
-                    bundle.putSerializable("user", task)
-                    navController.navigate("")
+                    Log.d("LogInPage", "NavController")
+                    navController.navigate("main_screen")
                     Log.d("Log in page", task.toString())
                 }
             }
