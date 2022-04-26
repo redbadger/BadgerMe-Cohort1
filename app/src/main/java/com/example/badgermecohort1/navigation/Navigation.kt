@@ -14,7 +14,7 @@ fun navigation(googleClient: GoogleSignInClient?) {
             SplashScreenAnimate(navController)
         }
         composable("login_screen") {
-            login(googleClient)
+            login(navController, googleClient)
             }
         }
     }

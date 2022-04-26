@@ -1,6 +1,7 @@
 package com.example.badgermecohort1.navigation
 
 import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -23,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.badgermecohort1.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -31,21 +33,20 @@ import com.google.android.gms.tasks.Task
 
 @Preview(showBackground = true)
 @Composable
-fun login(googleClient: GoogleSignInClient?) {
+fun login(navController: NavHostController, googleClient: GoogleSignInClient?) {
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            Log.d("Log in page", "Received result")
-            Log.d("Log in page", result.resultCode.toString())
-            Log.d("Log in page", result.toString())
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
-                Log.d("Log in page", "Result code OK")
-                if (result.data != null) {
+
+                if (intent != null) {
                     val task: Task<GoogleSignInAccount> =
                         GoogleSignIn.getSignedInAccountFromIntent(intent)
-                    println("Result data has value")
-                    println(task)
-                    Log.d("Log in page", "Result data has value")
+
+                    val bundle = Bundle()
+                    bundle.putSerializable("user", task)
+                    navController.navigate("")
+                    Log.d("Log in page", task.toString())
                 }
             }
         }
