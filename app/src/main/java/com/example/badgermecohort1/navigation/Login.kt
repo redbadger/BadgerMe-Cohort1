@@ -44,6 +44,13 @@ fun login(navController: NavHostController, googleClient: GoogleSignInClient?) {
                 if (result.data != null) {
                     val task: Task<GoogleSignInAccount> =
                         GoogleSignIn.getSignedInAccountFromIntent(intent)
+                    val result = task?.getResult()
+
+                    if (result != null) {
+                        Log.d("Log in page", result.idToken)
+                    } else {
+                        Log.d("Log in page", "No task result")
+                    }
                     Log.d("LogInPage", "NavController")
                     navController.navigate("main_screen")
                     Log.d("Log in page", task.toString())
