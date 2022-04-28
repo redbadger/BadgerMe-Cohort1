@@ -19,7 +19,7 @@ class LoginRepository(@ApplicationContext context : Context) {
         val task: Task<GoogleSignInAccount> =
             googleClient.silentSignIn()
 
-        val result = Tasks.await(task).id
+        val result =  Tasks.await(task).id
 
 //        val result =  task.addOnCompleteListener { task ->
 //            if(task.isSuccessful){

@@ -1,11 +1,15 @@
 package com.example.badgermecohort1.navigation
 
+import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -20,7 +24,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.badgermecohort1.R
 import com.example.badgermecohort1.Screens.SplashScreen.SplashScreenViewModel
-import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -41,16 +44,15 @@ fun SplashScreenAnimate(
         )
     )
 
-        LaunchedEffect(key1 = true){
-        //TODO: Need to change this so splash screen only lasts as long as it takes to load main screen
-        delay(1000)
-        if(splashViewModel.isUserSignedIn()){
-            navController.navigate("main_screen")
-        } else {
-            navController.navigate("login_screen"){
-                popUpTo("splash_screen"){
-                    inclusive=true
-                }
+    if(splashViewModel.userSignedIn.value == true && !splashViewModel.isLoading.value){
+        Log.d("Splash screen", "Navigating to main screen")
+        splashViewModel.setLoading(true)
+        navController.navigate("main_screen")
+    } else if (splashViewModel.userSignedIn.value == false && !splashViewModel.isLoading.value) {
+        splashViewModel.setLoading(true)
+        navController.navigate("login_screen"){
+            popUpTo("splash_screen"){
+                inclusive=true
             }
         }
     }
