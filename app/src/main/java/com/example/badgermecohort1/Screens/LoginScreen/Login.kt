@@ -1,8 +1,5 @@
 package com.example.badgermecohort1.navigation
 
-import android.app.Activity
-import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,7 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,41 +17,23 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.badgermecohort1.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.tasks.Task
+import com.example.badgermecohort1.Screens.LoginScreen.LoginViewModel
 
-@Preview(showBackground = true)
 @Composable
-fun login(navController: NavHostController, googleClient: GoogleSignInClient?) {
+fun login(navController: NavHostController, viewModel: LoginViewModel = viewModel()) {
     val startForResult =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            Log.d("LogInPage", result.resultCode.toString())
-            if (result.resultCode == Activity.RESULT_OK) {
-                val intent = result.data
-                Log.d("LogInPage", "Result.data")
-
-                if (result.data != null) {
-                    val task: Task<GoogleSignInAccount> =
-                        GoogleSignIn.getSignedInAccountFromIntent(intent)
-                    val result = task?.getResult()
-
-                    if (result != null) {
-                        Log.d("Log in page", result.idToken)
-                    } else {
-                        Log.d("Log in page", "No task result")
-                    }
-                    Log.d("LogInPage", "NavController")
-                    navController.navigate("main_screen")
-                    Log.d("Log in page", task.toString())
+            if(viewModel.isUserLoggedIn(result)){
+                navController.navigate("main_screen")
                 }
+            else {
+                //ToDo: Show error message
             }
         }
 
@@ -132,7 +111,7 @@ fun login(navController: NavHostController, googleClient: GoogleSignInClient?) {
         }
         Row(modifier = Modifier.padding(bottom = 40.dp, start = 15.dp, end = 15.dp)) {
             Button(
-                onClick = { startForResult.launch(googleClient?.signInIntent) },
+                onClick = { startForResult.launch(viewModel.launchGoogleClientSignIn()) },
                 modifier = Modifier
                     .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
                     .fillMaxWidth()

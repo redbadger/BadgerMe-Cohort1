@@ -14,17 +14,21 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.badgermecohort1.R
+import com.example.badgermecohort1.Screens.SplashScreen.SplashScreenViewModel
 import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun SplashScreenAnimate(navController: NavController) {
+fun SplashScreenAnimate(
+    navController: NavController,
+) {
+    val splashViewModel = hiltViewModel<SplashScreenViewModel>()
     val numberOfBars = 12
     val barValues = remember { mutableStateOf(1..numberOfBars) }
     val infiniteTransition = rememberInfiniteTransition()
@@ -40,9 +44,13 @@ fun SplashScreenAnimate(navController: NavController) {
         LaunchedEffect(key1 = true){
         //TODO: Need to change this so splash screen only lasts as long as it takes to load main screen
         delay(1000)
-        navController.navigate("login_screen"){
-            popUpTo("splash_screen"){
-                inclusive=true
+        if(splashViewModel.isUserSignedIn()){
+            navController.navigate("main_screen")
+        } else {
+            navController.navigate("login_screen"){
+                popUpTo("splash_screen"){
+                    inclusive=true
+                }
             }
         }
     }
