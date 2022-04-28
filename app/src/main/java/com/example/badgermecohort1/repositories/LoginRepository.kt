@@ -14,28 +14,30 @@ class LoginRepository(@ApplicationContext context : Context) {
 
     private var googleClient: GoogleSignInClient = getGoogleLoginAuth(context)
 
-    suspend fun userSignedIn() : Boolean{
-        if(googleClient == null) return false
+    private suspend fun getUserAccount() : GoogleSignInAccount? {
+        if(googleClient == null) return null
 
         val task: Task<GoogleSignInAccount> =
             googleClient.silentSignIn()
 
         try {
-            Tasks.await(task)
-            return true
+            return Tasks.await(task)
         } catch (e: ExecutionException) {
-            return false
+            return null
         }
-
-//        val result =  task.addOnCompleteListener { task ->
-//            if(task.isSuccessful){
-//                task.getResult()
-//            }
-//        }
     }
 
+    suspend fun isUserSignedIn() : Boolean{
+        return getUserAccount() != null
+    }
 
+    suspend fun getUserToken() : String? {
+        return getUserAccount()?.idToken
+    }
 
+    suspend fun getUserEmail() : String? {
+        return getUserAccount()?.email
+    }
 
     fun getGoogleClientSignInIntent() : Intent {
         return googleClient.signInIntent
