@@ -9,10 +9,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 @Composable
 fun navigation(googleClient: GoogleSignInClient?) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "splash_screen") {
-        composable("splash_screen") {
-            SplashScreenAnimate(navController)
-        }
+    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+        addTopLevel(navController)
+
+//        composable("splash_screen") {
+//            SplashScreenAnimate(navController)
+//        }
         composable("login_screen") {
             login(navController, googleClient)
             }
