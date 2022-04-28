@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 @Composable
-fun navigation() {
+fun navigation(googleClient: GoogleSignInClient?) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "splash_screen") {
 
@@ -15,7 +15,7 @@ fun navigation() {
             SplashScreenAnimate(navController)
         }
         composable("login_screen") {
-            login(navController)
+            login(navController, googleClient)
             }
         composable("main_screen"){
             MainScreen(navController)

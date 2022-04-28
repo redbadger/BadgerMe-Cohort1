@@ -8,6 +8,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.concurrent.ExecutionException
 
 class LoginRepository(@ApplicationContext context : Context) {
 
@@ -19,16 +20,18 @@ class LoginRepository(@ApplicationContext context : Context) {
         val task: Task<GoogleSignInAccount> =
             googleClient.silentSignIn()
 
-        val result =  Tasks.await(task).id
+        try {
+            Tasks.await(task)
+            return true
+        } catch (e: ExecutionException) {
+            return false
+        }
 
 //        val result =  task.addOnCompleteListener { task ->
 //            if(task.isSuccessful){
 //                task.getResult()
 //            }
 //        }
-
-
-        return result != null
     }
 
 
