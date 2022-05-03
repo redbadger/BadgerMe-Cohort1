@@ -1,6 +1,7 @@
 package com.example.badgermecohort1.repositories
 
 import android.util.Log
+import com.example.badgermecohort1.R
 import com.example.badgermecohort1.model.User
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -20,8 +21,6 @@ interface UserRepository {
 
     companion object {
 
-        var BASE_URL = "https://meek-hummingbird-b2e163.netlify.app/api/"
-
         fun create(loginRepository: LoginRepository): UserRepository {
             val client = OkHttpClient.Builder().addInterceptor { chain ->
                 runBlocking {
@@ -39,7 +38,7 @@ interface UserRepository {
             val retrofit = Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
+                .baseUrl(R.string.api_base_url.toString())
                 .build()
             return retrofit.create(UserRepository::class.java)
         }

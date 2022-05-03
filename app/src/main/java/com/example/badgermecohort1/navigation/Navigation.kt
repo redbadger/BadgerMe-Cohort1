@@ -13,13 +13,13 @@ fun navigation(googleClient: GoogleSignInClient?) {
     NavHost(navController = navController, startDestination = "splash_screen") {
 
         composable("splash_screen") {
-            SplashScreenAnimate(navController)
+            splashScreenAnimate(navController)
         }
         composable("login_screen") {
             login(navController, googleClient)
-            }
+        }
         composable("main_screen") {
-            MainScreen(navController)
+            mainScreen(navController)
         }
         composable("user_setup") {
             userSetup(navController)

@@ -27,7 +27,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun SplashScreenAnimate(
+fun splashScreenAnimate(
     navController: NavController,
 ) {
     val splashViewModel = hiltViewModel<SplashScreenViewModel>()

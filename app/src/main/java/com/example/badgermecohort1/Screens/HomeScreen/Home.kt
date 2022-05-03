@@ -10,7 +10,7 @@ import com.example.badgermecohort1.R
 import com.example.badgermecohort1.Screens.HomeScreen.HomeViewModel
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun mainScreen(navController: NavController) {
     val viewModel = hiltViewModel<HomeViewModel>()
 
     Column() {

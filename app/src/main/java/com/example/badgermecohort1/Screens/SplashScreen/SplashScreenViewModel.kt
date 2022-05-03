@@ -16,25 +16,26 @@ class SplashScreenViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
+    private val TAG = SplashScreenViewModel::class.qualifiedName
+
     val userSignedIn = mutableStateOf<Boolean?>(null);
     val userExists = mutableStateOf<Boolean?>(null);
     val isLoading = mutableStateOf<Boolean>(false);
 
     init {
-        Log.d("Splash screen", "Being created!")
         viewModelScope.launch(Dispatchers.IO) {
              val userEmail = loginRepository.getUserEmail()
 
             if (userEmail != null) {
-                Log.d("SplashScreenViewModel", "User signed in: $userEmail")
+                Log.d(TAG, "User signed in: $userEmail")
 
                 val usersResponse = userRepository.getUsersByEmail(userEmail);
 
                 if(usersResponse != null && usersResponse.isNotEmpty()) {
-                    Log.d("SplashScreenViewModel", "User exists")
+                    Log.d(TAG, "User exists")
                     userExists.value = true;
                 } else {
-                    Log.d("SplashScreenViewModel", "User does not exist")
+                    Log.d(TAG, "User does not exist")
                     userExists.value = false;
                 }
             } else {

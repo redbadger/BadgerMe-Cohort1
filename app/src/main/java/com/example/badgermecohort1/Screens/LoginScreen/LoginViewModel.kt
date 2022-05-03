@@ -1,7 +1,6 @@
 package com.example.badgermecohort1.Screens.LoginScreen
 
 import android.app.Activity
-import android.content.Intent
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
@@ -22,12 +21,12 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
+    private val TAG = LoginViewModel::class.qualifiedName
 
     fun getUserAccount(result: ActivityResult) : GoogleSignInAccount? {
-            Log.d("LogInPage", result.resultCode.toString())
+            Log.d(TAG, result.resultCode.toString())
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
-                Log.d("LogInPage", "Result.data")
 
                 if (result.data != null) {
                     val task: Task<GoogleSignInAccount> =
@@ -40,15 +39,10 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
-            Log.d("Log in page", "No task result")
+            Log.d(TAG, "No task result")
             return null
         }
 
-    fun launchGoogleClientSignIn() : Intent {
-        return loginRepository.getGoogleClientSignInIntent()
-    }
-
-    //ToDo: Change Function name
     fun navigateUser(
         userEmail: String,
         navController: NavController,
@@ -57,14 +51,12 @@ class LoginViewModel @Inject constructor(
             val usersResponse = userRepository.getUsersByEmail(userEmail);
 
            if(usersResponse != null && usersResponse.isNotEmpty()) {
-                Log.d("SplashScreenViewModel", "User exists")
+                Log.d(TAG, "User exists")
                 navController.navigate("main_screen")
             } else {
-                Log.d("SplashScreenViewModel", "User does not exist")
+                Log.d(TAG, "User does not exist")
                 navController.navigate("user_setup")
             }
         }
     }
-
-
-    }
+}
