@@ -2,6 +2,7 @@ package com.example.badgermecohort1.di
 
 import android.content.Context
 import com.example.badgermecohort1.repositories.LoginRepository
+import com.example.badgermecohort1.repositories.LoginRepositoryImpl
 import com.example.badgermecohort1.repositories.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesLoginRepository(@ApplicationContext context: Context) : LoginRepository {
-        return LoginRepository(context)
+        return LoginRepositoryImpl(context)
     }
 
     @Singleton

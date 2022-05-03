@@ -10,42 +10,38 @@ import com.google.android.gms.tasks.Tasks
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.ExecutionException
 
-class LoginRepository(@ApplicationContext context : Context) {
+interface LoginRepository {
+    suspend fun getUserToken() : String?
+    suspend fun getUserEmail() : String?
+    fun getGoogleClientSignInIntent() : Intent
+}
+
+class LoginRepositoryImpl(@ApplicationContext context : Context): LoginRepository {
 
     private var googleClient: GoogleSignInClient = getGoogleLoginAuth(context)
 
-    private suspend fun getUserAccount() : GoogleSignInAccount? {
+    private fun getUserAccount() : GoogleSignInAccount? {
         if(googleClient == null) return null
 
         val task: Task<GoogleSignInAccount> =
             googleClient.silentSignIn()
 
-        try {
-            return Tasks.await(task)
+        return try {
+            Tasks.await(task)
         } catch (e: ExecutionException) {
-            return null
+            null
         }
     }
 
-    suspend fun isUserSignedIn() : Boolean{
-        return getUserAccount() != null
-    }
-
-    suspend fun getUserToken() : String? {
+    override suspend fun getUserToken() : String? {
         return getUserAccount()?.idToken
     }
 
-    suspend fun getUserEmail() : String? {
+    override suspend fun getUserEmail() : String? {
         return getUserAccount()?.email
     }
 
-    fun getGoogleClientSignInIntent() : Intent {
+    override fun getGoogleClientSignInIntent() : Intent {
         return googleClient.signInIntent
     }
-
-
-
-
-
-
 }
