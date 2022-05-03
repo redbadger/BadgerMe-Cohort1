@@ -5,7 +5,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -14,17 +17,20 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.badgermecohort1.R
-import kotlinx.coroutines.delay
+import com.example.badgermecohort1.Screens.SplashScreen.SplashScreenViewModel
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun SplashScreenAnimate(navController: NavController) {
+fun splashScreenAnimate(
+    navController: NavController,
+) {
+    val splashViewModel = hiltViewModel<SplashScreenViewModel>()
     val numberOfBars = 12
     val barValues = remember { mutableStateOf(1..numberOfBars) }
     val infiniteTransition = rememberInfiniteTransition()
@@ -37,12 +43,23 @@ fun SplashScreenAnimate(navController: NavController) {
         )
     )
 
-        LaunchedEffect(key1 = true){
-        //TODO: Need to change this so splash screen only lasts as long as it takes to load main screen
-        delay(1000)
-        navController.navigate("main_screen"){
-            popUpTo("splash_screen"){
-                inclusive=true
+    if (!splashViewModel.isLoading.value) {
+        when {
+            splashViewModel.userExists.value == true -> {
+                splashViewModel.setLoading(true)
+                navController.navigate("main_screen")
+            }
+            splashViewModel.userExists.value == false -> {
+                splashViewModel.setLoading(true)
+                navController.navigate("user_setup")
+            }
+            splashViewModel.userSignedIn.value == false -> {
+                splashViewModel.setLoading(true)
+                navController.navigate("login_screen"){
+                    popUpTo("splash_screen"){
+                        inclusive=true
+                    }
+                }
             }
         }
     }
