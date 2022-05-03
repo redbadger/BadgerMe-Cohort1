@@ -51,8 +51,7 @@ fun SplashScreenAnimate(
             }
             splashViewModel.userExists.value == false -> {
                 splashViewModel.setLoading(true)
-//                TODO: navigate to create profile screen
-                navController.navigate("main_screen")
+                navController.navigate("user_setup")
             }
             splashViewModel.userSignedIn.value == false -> {
                 splashViewModel.setLoading(true)

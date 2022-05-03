@@ -13,12 +13,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.badgermecohort1.R
 import com.example.badgermecohort1.ui.composable.interestsImage
 
 @Preview(showBackground = true)
 @Composable
-fun userSetup(){
+fun userSetup(navController: NavController){
 Column(
 horizontalAlignment = Alignment.CenterHorizontally,
 verticalArrangement = Arrangement.Top,

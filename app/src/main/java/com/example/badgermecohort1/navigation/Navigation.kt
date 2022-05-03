@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.badgermecohort1.Screens.UserSetupScreen.userSetup
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 @Composable
@@ -17,8 +18,11 @@ fun navigation(googleClient: GoogleSignInClient?) {
         composable("login_screen") {
             login(navController, googleClient)
             }
-        composable("main_screen"){
+        composable("main_screen") {
             MainScreen(navController)
+        }
+        composable("user_setup") {
+            userSetup(navController)
         }
     }
 }
