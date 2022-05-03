@@ -17,6 +17,7 @@ class SplashScreenViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
     val userSignedIn = mutableStateOf<Boolean?>(null);
+    val userExists = mutableStateOf<Boolean?>(null);
     val isLoading = mutableStateOf<Boolean>(false);
 
     init {
@@ -25,21 +26,17 @@ class SplashScreenViewModel @Inject constructor(
              val userEmail = loginRepository.getUserEmail()
 
             if (userEmail != null) {
-                Log.d("SplashScreenViewModel", "User signed in")
+                Log.d("SplashScreenViewModel", "User signed in: $userEmail")
+
                 val usersResponse = userRepository.getUsersByEmail(userEmail);
 
-//                usersResponse.enqueue(object : Callback<List<User>> {
-//                    override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-//                        if(response?.body() != null) {
-//                            Log.d("SplashScreenViewModel", response.body()!!.toString())
-//                        }
-//                    }
-//                    override fun onFailure(call: Call<List<User>>, t: Throwable) {
-//                        TODO("Not yet implemented")
-//                        Log.d("SplashScreenViewModel", "Failed")
-//                    }
-//                })
-//                userSignedIn.value = true
+                if(usersResponse != null && usersResponse.isNotEmpty()) {
+                    Log.d("SplashScreenViewModel", "User exists")
+                    userExists.value = true;
+                } else {
+                    Log.d("SplashScreenViewModel", "User does not exist")
+                    userExists.value = false;
+                }
             } else {
                 userSignedIn.value = false
             }

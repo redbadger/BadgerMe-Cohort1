@@ -1,6 +1,5 @@
 package com.example.badgermecohort1.navigation
 
-import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -44,15 +43,24 @@ fun SplashScreenAnimate(
         )
     )
 
-    if(splashViewModel.userSignedIn.value == true && !splashViewModel.isLoading.value){
-        Log.d("Splash screen", "Navigating to main screen")
-        splashViewModel.setLoading(true)
-        navController.navigate("main_screen")
-    } else if (splashViewModel.userSignedIn.value == false && !splashViewModel.isLoading.value) {
-        splashViewModel.setLoading(true)
-        navController.navigate("login_screen"){
-            popUpTo("splash_screen"){
-                inclusive=true
+    if (!splashViewModel.isLoading.value) {
+        when {
+            splashViewModel.userExists.value == true -> {
+                splashViewModel.setLoading(true)
+                navController.navigate("main_screen")
+            }
+            splashViewModel.userExists.value == false -> {
+                splashViewModel.setLoading(true)
+//                TODO: navigate to create profile screen
+                navController.navigate("main_screen")
+            }
+            splashViewModel.userSignedIn.value == false -> {
+                splashViewModel.setLoading(true)
+                navController.navigate("login_screen"){
+                    popUpTo("splash_screen"){
+                        inclusive=true
+                    }
+                }
             }
         }
     }
