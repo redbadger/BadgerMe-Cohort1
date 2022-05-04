@@ -52,7 +52,7 @@ modifier = Modifier.fillMaxSize()
     }
     Row(modifier = Modifier.padding(bottom = 40.dp, start = 15.dp, end = 15.dp)) {
         Button(
-            onClick = { },
+            onClick = { navController.navigate("user_profile")},
             modifier = Modifier
                 .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
                 .fillMaxWidth()
