@@ -13,13 +13,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.badgermecohort1.R
 import com.example.badgermecohort1.ui.composable.interestsImage
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun userSetup(navController: NavController){
+fun userSetup(){
 Column(
 horizontalAlignment = Alignment.CenterHorizontally,
 verticalArrangement = Arrangement.Top,
@@ -37,15 +36,15 @@ modifier = Modifier.fillMaxSize()
     ) {
         Row() {
             interestsImage(imageResourceId = R.drawable.square, imageContainerTitle = "Food" )
-            interestsImage(imageResourceId = R.drawable.square_2, imageContainerTitle = "Drinks" )
+            interestsImage(imageResourceId = R.drawable.square_2, imageContainerTitle = "Chats" )
         }
         Row() {
-            interestsImage(imageResourceId = R.drawable.square_3, imageContainerTitle = "Coffee" )
-            interestsImage(imageResourceId = R.drawable.square_4, imageContainerTitle = "Chats")
+            interestsImage(imageResourceId = R.drawable.square_3, imageContainerTitle = "Walks" )
+            interestsImage(imageResourceId = R.drawable.square_4, imageContainerTitle = "Hugs")
         }
         Row() {
-            interestsImage(imageResourceId = R.drawable.square_5, imageContainerTitle = "Walks")
-            interestsImage(imageResourceId = R.drawable.square_6, imageContainerTitle = "Hugs")
+            interestsImage(imageResourceId = R.drawable.square_5, imageContainerTitle = "Badgers")
+            interestsImage(imageResourceId = R.drawable.square_6, imageContainerTitle = "Drinks")
 
         }
 

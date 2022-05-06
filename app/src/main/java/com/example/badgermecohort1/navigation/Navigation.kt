@@ -22,7 +22,7 @@ fun navigation(googleClient: GoogleSignInClient?) {
             mainScreen(navController)
         }
         composable("user_setup") {
-            userSetup(navController)
+            userSetup()
         }
     }
 }
