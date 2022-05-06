@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.example.badgermecohort1.R
 import com.example.badgermecohort1.ui.composable.interestsImage
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun userSetup(){
 Column(
@@ -32,10 +32,10 @@ modifier = Modifier.fillMaxSize()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.weight(1f, true)
+        modifier = Modifier.weight(1f, true).fillMaxWidth()
     ) {
         Row() {
-            interestsImage(imageResourceId = R.drawable.square, imageContainerTitle = "Food" )
+            interestsImage(imageResourceId = R.drawable.square, imageContainerTitle = "Food")
             interestsImage(imageResourceId = R.drawable.square_2, imageContainerTitle = "Chats" )
         }
         Row() {

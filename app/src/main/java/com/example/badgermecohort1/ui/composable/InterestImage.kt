@@ -74,24 +74,57 @@ fun interestsImagePreview() {
 
 
 
-
-
-
 @Composable
 fun interestsImage(
     imageResourceId : Int,
     contentDescription: String = "content description",
-    imageContainerTitle: String
+    imageContainerTitle: String,
+    modifier: Modifier = Modifier
 ) {
+    var isSelected by remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Center
-    ){
-        Image(
-            painter = painterResource(imageResourceId),
-            contentDescription = contentDescription
-        )
-        Text(text = imageContainerTitle, textAlign = TextAlign.Center)
+    ) {
+        Box(contentAlignment = Alignment.TopEnd) {
+            Image(
+                painter = painterResource(imageResourceId),
+                contentDescription = contentDescription,
+                modifier = Modifier.matchParentSize()
+                        .padding(5.dp)
+                        .size(96.dp)
+            )
+            IconToggleButton(
+                checked = isSelected,
+                onCheckedChange = { isSelected = !isSelected }
+            ) {
+                Icon(
+                    imageVector = if (isSelected) {
+                        Icons.Default.AccountCircle
+                    } else {
+                        Icons.Default.CheckCircle
+                    },
+                    contentDescription = "",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(7.dp)
+                        .padding(top = 1.dp, end = 1.dp)
+                        .align(Alignment.TopEnd)
+                )
+            }
+
         }
+        Text(
+            text = imageContainerTitle,
+            fontSize = 6.sp,
+            style = MaterialTheme.typography.subtitle1,
+            color = colorResource(R.color.off_black),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .background(Color.White)
+                .padding(bottom = 4.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+    }
 }
 
