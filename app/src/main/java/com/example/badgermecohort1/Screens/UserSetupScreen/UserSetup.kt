@@ -10,54 +10,60 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.badgermecohort1.R
 import com.example.badgermecohort1.ui.composable.interestsImage
 
-@Preview(showBackground = true)
 @Composable
-fun userSetup(){
-Column(
-horizontalAlignment = Alignment.CenterHorizontally,
-verticalArrangement = Arrangement.Top,
-modifier = Modifier.fillMaxSize()
-) {
-    Text(
-        "What are you interested in?",
-        fontSize = 50.sp,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold)
+fun userSetup(navController: NavController){
+    val userSetupViewModel = hiltViewModel<UserSetupViewModel>()
+
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.weight(1f, true).fillMaxWidth()
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Top,
+    modifier = Modifier.fillMaxSize()
     ) {
-        Row() {
-            interestsImage(imageResourceId = R.drawable.square, imageContainerTitle = "Food")
-            interestsImage(imageResourceId = R.drawable.square_2, imageContainerTitle = "Chats" )
-        }
-        Row() {
-            interestsImage(imageResourceId = R.drawable.square_3, imageContainerTitle = "Walks" )
-            interestsImage(imageResourceId = R.drawable.square_4, imageContainerTitle = "Hugs")
-        }
-        Row() {
-            interestsImage(imageResourceId = R.drawable.square_5, imageContainerTitle = "Badgers")
-            interestsImage(imageResourceId = R.drawable.square_6, imageContainerTitle = "Drinks")
-
-        }
-
-    }
-    Row(modifier = Modifier.padding(bottom = 40.dp, start = 15.dp, end = 15.dp)) {
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
-                .fillMaxWidth()
+        Text(
+            "What are you interested in?",
+            fontSize = 50.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1f, true).fillMaxWidth()
+        //TODO: Change this to use a for loop where we get the value for imageContainerTitle from the Interests API
         ) {
-            Text("Continue")
+            Row() {
+                interestsImage(imageResourceId = R.drawable.square, imageContainerTitle = "Food", viewModel = userSetupViewModel)
+                interestsImage(imageResourceId = R.drawable.square_2, imageContainerTitle = "Chats", viewModel = userSetupViewModel )
+            }
+            Row() {
+                interestsImage(imageResourceId = R.drawable.square_3, imageContainerTitle = "Walks", viewModel = userSetupViewModel )
+                interestsImage(imageResourceId = R.drawable.square_4, imageContainerTitle = "Hugs", viewModel = userSetupViewModel)
+            }
+            Row() {
+                interestsImage(imageResourceId = R.drawable.square_5, imageContainerTitle = "Badgers", viewModel = userSetupViewModel)
+                interestsImage(imageResourceId = R.drawable.square_6, imageContainerTitle = "Drinks", viewModel = userSetupViewModel)
+
+            }
+
+        }
+        Row(modifier = Modifier.padding(bottom = 40.dp, start = 15.dp, end = 15.dp)) {
+            Button(
+                enabled = true, //ToDo this needs to be enabled/disabled depending on if user has clicked on an interest image
+                onClick = {
+                    userSetupViewModel.addUserInterests(navController)
+                },
+                modifier = Modifier
+                    .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
+                    .fillMaxWidth()
+            ) {
+                Text("Continue")
+            }
         }
     }
-}
 }

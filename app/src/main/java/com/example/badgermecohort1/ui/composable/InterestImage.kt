@@ -1,5 +1,6 @@
 package com.example.badgermecohort1.ui.composable
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.badgermecohort1.R
+import com.example.badgermecohort1.Screens.UserSetupScreen.UserSetupViewModel
 
 @Preview(showBackground = true)
 @Composable
@@ -29,17 +31,19 @@ fun interestsImagePreview() {
     var isSelected by remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.width(70.dp).height(100.dp)
     ) {
         Box(contentAlignment = Alignment.TopEnd) {
             Image(
                 painter = painterResource(R.drawable.square_3),
                 contentDescription = "contentDescription",
-                modifier = Modifier.matchParentSize()
+                modifier = Modifier.width(70.dp).height(85.dp)
             )
             IconToggleButton(
                 checked = isSelected,
-                onCheckedChange = { isSelected = !isSelected }
+                onCheckedChange = { isSelected = !isSelected },
+                modifier = Modifier.matchParentSize()
             ) {
                 Icon(
                     imageVector = if (isSelected) {
@@ -79,9 +83,11 @@ fun interestsImage(
     imageResourceId : Int,
     contentDescription: String = "content description",
     imageContainerTitle: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: UserSetupViewModel
 ) {
     var isSelected by remember { mutableStateOf(false) }
+
     Column(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Center
@@ -90,13 +96,25 @@ fun interestsImage(
             Image(
                 painter = painterResource(imageResourceId),
                 contentDescription = contentDescription,
-                modifier = Modifier.matchParentSize()
-                        .padding(5.dp)
-                        .size(96.dp)
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(5.dp)
             )
             IconToggleButton(
                 checked = isSelected,
-                onCheckedChange = { isSelected = !isSelected }
+                onCheckedChange = {
+                    isSelected = !isSelected
+                    if(isSelected) {
+                        viewModel.mutableList.add(imageContainerTitle)
+                        Log.d("InterestImage Add", viewModel.mutableList.toString())
+                    }
+                    else {
+                        viewModel.mutableList.remove(imageContainerTitle)
+                        Log.d("InterestImage Remove", viewModel.mutableList.toString())
+                    }
+
+                },
+                modifier = Modifier.matchParentSize()
             ) {
                 Icon(
                     imageVector = if (isSelected) {
@@ -107,7 +125,7 @@ fun interestsImage(
                     contentDescription = "",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(7.dp)
+                        .size(20.dp)
                         .padding(top = 1.dp, end = 1.dp)
                         .align(Alignment.TopEnd)
                 )
@@ -116,7 +134,7 @@ fun interestsImage(
         }
         Text(
             text = imageContainerTitle,
-            fontSize = 6.sp,
+            fontSize = 30.sp,
             style = MaterialTheme.typography.subtitle1,
             color = colorResource(R.color.off_black),
             textAlign = TextAlign.Center,
