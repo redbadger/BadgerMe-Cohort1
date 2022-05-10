@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BadgerMeCohort1</string>
     <string name="backend_client_id">373971381234-idatioeiod4batjn8aqmlu1qv8bak8dp.apps.googleusercontent.com</string>
-    <string name="api_base_url">https://meek-hummingbird-b2e163.netlify.app/api/</string>
+    <string name="api_base_url">https:\/\/meek-hummingbird-b2e163.netlify.app/api/</string>
     <string name="login_description">BadgerMe let\'s you create and join events with other Badgers.</string>
     <string name="login_sign_in_with_google">Sign in with Google</string>
 </resources>
