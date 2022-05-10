@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(
         composableScope.launch(Dispatchers.IO) {
             val usersResponse = userRepository.getUserByEmail(userEmail);
 
-            if (usersResponse.user != null) {
+            if(usersResponse != null && usersResponse.isNotEmpty()) {
                 Log.d(TAG, "User exists")
                 navController.navigate("main_screen")
             } else if (usersResponse.error == UserResponseError.UserDoesNotExist) {

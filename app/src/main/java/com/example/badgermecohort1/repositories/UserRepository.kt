@@ -1,25 +1,45 @@
 package com.example.badgermecohort1.repositories
 
 import android.util.Log
-import com.example.badgermecohort1.client.ApiClient
 import com.example.badgermecohort1.model.User
-import javax.inject.Inject
+import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 
-class UserRepository @Inject constructor(private val apiClient: ApiClient, private val loginRepository: LoginRepository) {
+interface UserRepository {
+    @GET("users")
+    suspend fun getUsers() : List<User>
 
-    suspend fun getUserByEmail(email: String) : UserResponse {
-        val token = loginRepository.getUserToken() ?: return UserResponse(error = UserResponseError.NotLoggedIn)
+    @GET("users")
+    suspend fun getUsersByEmail(@Query("email") email: String) : List<User>
 
-        val response = apiClient.getUsersByEmail("Bearer $token", email)
+    companion object {
 
-        if (response.isSuccessful) {
-            val users = response.body()
-            if (users?.isNotEmpty() == true) {
-                return UserResponse(user = users.first())
-            }
+        fun create(loginRepository: LoginRepository): UserRepository {
+            val client = OkHttpClient.Builder().addInterceptor { chain ->
+                runBlocking {
+                    // 'runBlocking' forces code with an async request to be executed synchronously
+                    // since coroutines can't be used in the 'addInterceptor' block
+                    val token = loginRepository.getUserToken()
+                    Log.d("UserRepository", "Got token: $token")
+                    val newRequest: Request = chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer $token")
+                        .build()
+                    chain.proceed(newRequest)
+                }
+            }.build()
 
-            return UserResponse(error = UserResponseError.UserDoesNotExist)
+            val retrofit = Retrofit.Builder()
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://meek-hummingbird-b2e163.netlify.app/api/")
+                .build()
+            return retrofit.create(UserRepository::class.java)
         }
 
         val errorCode = response.code()
