@@ -43,46 +43,53 @@ fun userProfileScreen(userName: String) {
     var aboutMeText by remember { mutableStateOf(TextFieldValue("")) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 49.dp)
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.fillMaxSize().padding(49.dp)
     ) {
         Text(
             stringResource(
                 R.string.user_profile_title),
-            fontSize = 50.sp,
+            fontSize = 40.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold)
         Image(
             painter = painterResource(R.drawable.profile),
             contentDescription = "profile avatar",
-            modifier = Modifier.padding(Dp(50.0F))
+            modifier = Modifier.padding(Dp(30.0F))
         )
-        TextField(
-            value = userName,
-            onValueChange = { },
-            // Name is read only, based on the ACs
-            readOnly = true,
-            label = { Text(text = stringResource(R.string.name_label)) },
-            placeholder = {Text(text = stringResource(R.string.name_placeholder)) },
-            modifier = Modifier.padding(bottom = 16.dp),
-            isError = false)
-        TextField(
-            value = aboutMeText,
-            onValueChange = { aboutMeText = it},
-            readOnly = true,
-            label = { Text(text = stringResource(R.string.about_me_label)) },
-            placeholder = {Text(text = stringResource(R.string.about_me_placeholder)) },
-            isError = false)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1f, true).fillMaxWidth())
+            {
+                Text("Name", modifier = Modifier.align(Alignment.Start))
+                TextField(
+                    value = userName,
+                    onValueChange = { },
+                    // Name is read only, based on the ACs
+                    readOnly = true,
+                    placeholder = {Text(text = stringResource(R.string.name_placeholder)) },
+                    modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth(),
+                    isError = false)
+                Text("About Me", modifier = Modifier.align(Alignment.Start))
+                TextField(
+                    value = aboutMeText,
+                    onValueChange = { aboutMeText = it},
+                    readOnly = true,
+                    label = { Text(text = stringResource(R.string.about_me_label)) },
+                    placeholder = {Text(text = stringResource(R.string.about_me_placeholder)) },
+                    isError = false)
+        }
         Row(modifier = Modifier.padding(bottom = 40.dp, start = 15.dp, end = 15.dp)) {
             Button(
-                onClick = { },
+                enabled = true,
+                onClick = {
+                },
                 modifier = Modifier
                     .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
             ) {
-                Text(text = stringResource(R.string.continue_button))
+                Text("Continue")
             }
         }
     }
