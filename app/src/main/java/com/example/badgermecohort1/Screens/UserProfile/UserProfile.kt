@@ -74,7 +74,10 @@ fun userProfileScreen(userName: String) {
                 Text("About Me", modifier = Modifier.align(Alignment.Start))
                 TextField(
                     value = aboutMeText,
-                    onValueChange = { aboutMeText = it},
+                    onValueChange = {
+                        if(it.toString().length < 200) {
+                        aboutMeText = it
+                        }},
                     readOnly = true,
                     label = { Text(text = stringResource(R.string.about_me_label)) },
                     placeholder = {Text(text = stringResource(R.string.about_me_placeholder)) },
