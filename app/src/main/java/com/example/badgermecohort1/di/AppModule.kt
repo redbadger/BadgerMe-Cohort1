@@ -1,9 +1,9 @@
 package com.example.badgermecohort1.di
 
 import android.content.Context
+import com.example.badgermecohort1.client.ApiClient
 import com.example.badgermecohort1.repositories.LoginRepository
 import com.example.badgermecohort1.repositories.LoginRepositoryImpl
-import com.example.badgermecohort1.repositories.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +23,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesUserRepository(loginRepository: LoginRepository): UserRepository {
-        return UserRepository.create(loginRepository)
+    fun providesApiClient(): ApiClient {
+        return ApiClient.create()
     }
 }

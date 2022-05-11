@@ -41,5 +41,22 @@ interface UserRepository {
                 .build()
             return retrofit.create(UserRepository::class.java)
         }
+
+        val errorCode = response.code()
+        if (errorCode == 401) {
+            return UserResponse(error = UserResponseError.InvalidToken)
+        }
+
+        Log.d("UserRepository", "Error code: $errorCode")
+        return UserResponse(error = UserResponseError.OtherError)
     }
 }
+
+enum class UserResponseError {
+    NotLoggedIn,
+    InvalidToken,
+    UserDoesNotExist,
+    OtherError
+}
+
+data class UserResponse(val user: User? = null, val error: UserResponseError? = null)
