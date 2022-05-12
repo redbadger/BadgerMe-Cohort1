@@ -17,7 +17,7 @@ class UserSetupViewModel @Inject constructor(
 
     fun addUserInterests(navController: NavController){
         Log.d(TAG, "Adding user interests: $mutableList")
-        navController.navigate("UserProfile")
+        navController.navigate("user_profile")
     }
 
 

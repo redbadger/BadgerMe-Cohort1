@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.badgermecohort1.Screens.UserSetupScreen.userSetup
+import com.example.badgermecohort1.Screens.userProfile.userProfile
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 @Composable
@@ -23,6 +24,11 @@ fun navigation(googleClient: GoogleSignInClient?) {
         }
         composable("user_setup") {
             userSetup(navController)
+        }
+        composable("user_profile") {
+            // TODO: pass this in based on logged in user, or
+            // fetch name from userProfile view model
+            userProfile(navController, "Jimminy Cricket")
         }
     }
 }

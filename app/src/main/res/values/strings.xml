@@ -4,4 +4,10 @@
     <string name="api_base_url">https:\/\/meek-hummingbird-b2e163.netlify.app/api/</string>
     <string name="login_description">BadgerMe let\'s you create and join events with other Badgers.</string>
     <string name="login_sign_in_with_google">Sign in with Google</string>
+    <string name="user_profile_title">Tell us about yourself</string>
+    <string name="name_label">Name</string>
+    <string name="name_placeholder">Write something</string>
+    <string name="about_me_label">About me</string>
+    <string name="about_me_placeholder">For example: I like drinking Pina Colades in the rain...</string>
+    <string name="continue_button">Continue</string>
 </resources>
