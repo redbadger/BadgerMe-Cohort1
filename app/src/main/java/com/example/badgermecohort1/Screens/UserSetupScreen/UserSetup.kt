@@ -34,7 +34,9 @@ fun userSetup(navController: NavController){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.weight(1f, true).fillMaxWidth()
+            modifier = Modifier
+                .weight(1f, true)
+                .fillMaxWidth()
         //TODO: Change this to use a for loop where we get the value for imageContainerTitle from the Interests API
         ) {
             Row() {

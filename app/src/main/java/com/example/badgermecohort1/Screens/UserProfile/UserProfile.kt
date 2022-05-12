@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,21 +25,23 @@ import com.example.badgermecohort1.Screens.LoginScreen.UserProfileViewModel
 
 @Composable
 fun userProfile(navController: NavHostController, userName: String) {
+    userProfileScreen(userName, navController)
+}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun userProfileScreenPreview() {
+//    userProfileScreen(userName = "Peter Parker", )
+//}
+
+
+@Composable
+fun userProfileScreen(userName: String, navController: NavHostController) {
+    var aboutMeText by remember { mutableStateOf(TextFieldValue(""))}
+    var textSelected by remember { mutableStateOf(false)}
+
     val viewModel = hiltViewModel<UserProfileViewModel>()
 
-    userProfileScreen(userName)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun userProfileScreenPreview() {
-    userProfileScreen(userName = "Peter Parker")
-}
-
-
-@Composable
-fun userProfileScreen(userName: String) {
-    var aboutMeText by remember { mutableStateOf(TextFieldValue("")) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
@@ -75,18 +76,19 @@ fun userProfileScreen(userName: String) {
                 TextField(
                     value = aboutMeText,
                     onValueChange = {
+                        textSelected = it.toString().isNotEmpty()
                         if(it.toString().length < 200) {
                         aboutMeText = it
                         }},
-                    readOnly = true,
                     label = { Text(text = stringResource(R.string.about_me_label)) },
                     placeholder = {Text(text = stringResource(R.string.about_me_placeholder)) },
                     isError = false)
         }
         Row(modifier = Modifier.padding(bottom = 40.dp, start = 15.dp, end = 15.dp)) {
             Button(
-                enabled = true,
+                enabled = textSelected,
                 onClick = {
+                    viewModel.navigateToMainScreen(navController)
                 },
                 modifier = Modifier
                     .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
